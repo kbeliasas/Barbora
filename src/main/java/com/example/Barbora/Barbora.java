@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class Barbora {
 
     @Autowired
@@ -32,14 +35,13 @@ public class Barbora {
 
         barboraApiModel.deliveries.forEach(delivery -> {
             delivery.params.matrix.forEach(matrix -> {
-                System.out.println("Now = " + LocalDateTime.now());
-                System.out.println("Checking " + matrix.day);
+                log.info("Now = " + LocalDateTime.now());
+                log.info("Checking " + matrix.day);
                 matrix.hours.forEach(hour -> {
                     if (hour.available) {
-                        System.out.println("Day = " + matrix.day);
-                        System.out.println("Hour = " + hour.hour);
-                        System.out.println("Price = " + hour.price);
-                        System.out.println();
+                        log.info("Day = " + matrix.day);
+                        log.info("Hour = " + hour.hour);
+                        log.info("Price = " + hour.price);
                         list.add(new BarboraTimeModel(matrix.day, hour.hour, hour.price));
                     }
                 });
@@ -49,6 +51,5 @@ public class Barbora {
         if (!list.isEmpty()) {
             senderService.Send(list);
         }
-        System.out.println();
     }
 }
