@@ -35,7 +35,6 @@ public class Barbora {
 
         barboraApiModel.deliveries.forEach(delivery -> {
             delivery.params.matrix.forEach(matrix -> {
-                log.info("Now = " + LocalDateTime.now());
                 log.info("Checking " + matrix.day);
                 matrix.hours.forEach(hour -> {
                     if (hour.available) {
